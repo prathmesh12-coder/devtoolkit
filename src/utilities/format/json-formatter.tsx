@@ -78,9 +78,10 @@ export default function JsonFormatter() {
           label="Input"
           value={input}
           onChange={setInput}
+          language="json"
           placeholder="Paste JSON here…"
         />
-        <EditorPanel label="Output" value={output} readOnly copy placeholder="Result appears here…" />
+        <EditorPanel label="Output" value={output} readOnly copy language="json" placeholder="Result appears here…" />
       </div>
     </div>
   );

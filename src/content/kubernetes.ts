@@ -221,4 +221,99 @@ export const kubernetesLessons: LessonContent[] = [
       },
     ],
   },
+  {
+    slug: "namespaces",
+    title: "Namespaces & Contexts",
+    level: "Beginner",
+    summary: "Organize resources with namespaces and switch between clusters.",
+    explanation: [
+      "Namespaces partition a cluster into virtual sub-clusters, so teams or environments can share one physical cluster without colliding. Most commands default to the 'default' namespace.",
+      "Use -n <namespace> to target one, or -A / --all-namespaces to see everything. A context bundles a cluster, user, and namespace; kubectl config use-context switches between them.",
+      "Setting a default namespace for your current context saves typing -n on every command.",
+    ],
+    cheatsheet: [
+      { cmd: "kubectl get ns", desc: "List namespaces" },
+      { cmd: "kubectl get pods -n kube-system", desc: "Target a namespace" },
+      { cmd: "kubectl create namespace dev", desc: "Create a namespace" },
+      { cmd: "kubectl config get-contexts", desc: "List available contexts" },
+      { cmd: "kubectl config use-context prod", desc: "Switch clusters" },
+      { cmd: "kubectl config set-context --current --namespace=dev", desc: "Set a default namespace" },
+    ],
+    terminal: [
+      {
+        cmd: "kubectl get ns",
+        output:
+          "NAME              STATUS   AGE\ndefault           Active   30d\nkube-system       Active   30d\ndev               Active   2d",
+      },
+      {
+        cmd: "kubectl config use-context prod",
+        output: 'Switched to context "prod".',
+      },
+    ],
+    quiz: [
+      {
+        question: "What problem do namespaces solve?",
+        options: [
+          "They speed up pods",
+          "They isolate and organize resources within one cluster",
+          "They encrypt traffic",
+          "They store secrets",
+        ],
+        answer: 1,
+      },
+      {
+        question: "Which flag shows resources across every namespace?",
+        options: ["-n all", "-A", "--global", "-x"],
+        answer: 1,
+      },
+    ],
+  },
+  {
+    slug: "probes",
+    title: "Health Probes",
+    level: "Advanced",
+    summary: "Keep workloads healthy with liveness, readiness, and startup probes.",
+    explanation: [
+      "Kubernetes uses probes to know a container's health. A liveness probe restarts a container that has hung. A readiness probe controls whether a Pod receives traffic — failing it removes the Pod from Service endpoints without restarting it.",
+      "A startup probe protects slow-starting apps by holding off the other probes until the app has booted.",
+      "Probes can use HTTP GETs, TCP checks, or commands, with tunable timing like initialDelaySeconds and periodSeconds.",
+    ],
+    cheatsheet: [
+      { cmd: "livenessProbe.httpGet", desc: "Restart if this endpoint fails" },
+      { cmd: "readinessProbe.httpGet", desc: "Gate traffic on this endpoint" },
+      { cmd: "startupProbe", desc: "Delay other probes until startup done" },
+      { cmd: "initialDelaySeconds", desc: "Wait before the first check" },
+      { cmd: "kubectl describe pod <name>", desc: "See probe failures in Events" },
+    ],
+    terminal: [
+      {
+        cmd: "kubectl get pod api-1",
+        output:
+          "NAME    READY   STATUS    RESTARTS   AGE\napi-1   0/1     Running   0          20s",
+        note: "READY 0/1 means the readiness probe has not passed yet.",
+      },
+      {
+        cmd: "kubectl describe pod api-1",
+        output:
+          "Events:\n  Warning  Unhealthy  5s  kubelet  Readiness probe failed: HTTP probe failed with statuscode: 503",
+      },
+    ],
+    quiz: [
+      {
+        question: "What does a failing readiness probe do?",
+        options: [
+          "Restarts the container",
+          "Removes the Pod from Service endpoints (stops traffic)",
+          "Deletes the Pod",
+          "Scales the Deployment",
+        ],
+        answer: 1,
+      },
+      {
+        question: "Which probe is designed for slow-starting applications?",
+        options: ["livenessProbe", "readinessProbe", "startupProbe", "healthProbe"],
+        answer: 2,
+      },
+    ],
+  },
 ];

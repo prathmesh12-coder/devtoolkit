@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { CopyButton } from "@/components/tools/copy-button";
+import { CodeEditor, type CodeLanguage } from "@/components/tools/code-editor";
 import { cn } from "@/lib/utils";
 
 interface EditorPanelProps {
@@ -16,9 +17,11 @@ interface EditorPanelProps {
   actions?: React.ReactNode;
   className?: string;
   textareaClassName?: string;
+  /** When set, renders a syntax-highlighted code editor instead of a textarea. */
+  language?: CodeLanguage;
 }
 
-/** Labeled textarea panel with optional copy button and action slot. */
+/** Labeled editor panel with optional copy button, action slot, and syntax highlighting. */
 export function EditorPanel({
   label,
   value,
@@ -30,6 +33,7 @@ export function EditorPanel({
   actions,
   className,
   textareaClassName,
+  language,
 }: EditorPanelProps) {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
@@ -40,14 +44,25 @@ export function EditorPanel({
           {copy && <CopyButton value={value} />}
         </div>
       </div>
-      <Textarea
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-        readOnly={readOnly}
-        placeholder={placeholder}
-        rows={rows}
-        className={cn(readOnly && "bg-muted/40", textareaClassName)}
-      />
+      {language ? (
+        <CodeEditor
+          value={value}
+          onChange={onChange}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          language={language}
+          minHeight={`${rows * 1.5}rem`}
+        />
+      ) : (
+        <Textarea
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          rows={rows}
+          className={cn(readOnly && "bg-muted/40", textareaClassName)}
+        />
+      )}
     </div>
   );
 }

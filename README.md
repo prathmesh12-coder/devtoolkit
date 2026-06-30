@@ -75,7 +75,11 @@ To add a **lesson**, just add an entry to `src/content/linux.ts`, `docker.ts`, o
 
 ## ☁️ Deploy
 
-One click with [Vercel](https://vercel.com) — import the repo and hit deploy. Every page is statically generated, so it also works on any static host.
+Deploy your own copy in one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/prathmesh12-coder/devtoolkit)
+
+Every page is statically generated, so it also works on Netlify, GitHub Pages, or any static host.
 
 ---
 

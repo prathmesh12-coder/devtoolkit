@@ -110,7 +110,7 @@ export default function DockerToCompose() {
       {error && <Callout tone="error">{error}</Callout>}
       <div className="grid gap-4 lg:grid-cols-2">
         <EditorPanel label="docker run command" value={input} onChange={setInput} placeholder="docker run -p 80:80 nginx" />
-        <EditorPanel label="docker-compose.yml" value={output} readOnly copy />
+        <EditorPanel label="docker-compose.yml" value={output} readOnly copy language="yaml" />
       </div>
     </div>
   );

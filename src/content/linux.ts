@@ -243,4 +243,88 @@ export const linuxLessons: LessonContent[] = [
       },
     ],
   },
+  {
+    slug: "pipes-redirection",
+    title: "Pipes & Redirection",
+    level: "Intermediate",
+    summary: "Connect commands together and redirect input, output, and errors.",
+    explanation: [
+      "Every command has three standard streams: stdin (0), stdout (1), and stderr (2). Redirection lets you send these to files instead of the terminal.",
+      "Use > to overwrite a file, >> to append, and 2> to capture errors. The pipe | sends one command's stdout into the next command's stdin — the heart of the Unix philosophy.",
+      "Combine them to build powerful one-liners, like filtering, counting, and saving results in a single line.",
+    ],
+    cheatsheet: [
+      { cmd: "cmd > out.txt", desc: "Redirect stdout, overwriting" },
+      { cmd: "cmd >> out.txt", desc: "Append stdout to a file" },
+      { cmd: "cmd 2> err.txt", desc: "Redirect stderr" },
+      { cmd: "cmd > out 2>&1", desc: "Send stderr to the same place as stdout" },
+      { cmd: "cmd1 | cmd2", desc: "Pipe stdout into the next command" },
+      { cmd: "cmd < in.txt", desc: "Read stdin from a file" },
+    ],
+    terminal: [
+      {
+        cmd: "ls /etc | wc -l",
+        output: "118",
+        note: "ls output is piped into wc -l to count lines.",
+      },
+      {
+        cmd: "grep -i error app.log > errors.txt",
+        output: "",
+        note: "Matches are written to errors.txt instead of the screen.",
+      },
+      { cmd: "cat errors.txt | head -2", output: "ERROR connection refused\nERROR timeout after 30s" },
+    ],
+    quiz: [
+      {
+        question: "What does the pipe | do?",
+        options: [
+          "Deletes a file",
+          "Sends one command's output into another's input",
+          "Runs a command in the background",
+          "Comments out a line",
+        ],
+        answer: 1,
+      },
+      {
+        question: "Which redirection appends to a file instead of overwriting it?",
+        options: [">", ">>", "2>", "<"],
+        answer: 1,
+      },
+    ],
+  },
+  {
+    slug: "archives",
+    title: "Archives & Compression",
+    level: "Intermediate",
+    summary: "Bundle and compress files with tar and gzip.",
+    explanation: [
+      "tar packs many files into a single archive (a 'tarball'). On its own it does not compress — it is usually combined with gzip via the z flag.",
+      "The common flags spell out the action: c = create, x = extract, t = list, v = verbose, f = file, z = gzip. So tar -czf makes a compressed archive and tar -xzf extracts one.",
+      "Remember -f must come last because it expects the archive filename right after it.",
+    ],
+    cheatsheet: [
+      { cmd: "tar -czf out.tar.gz dir/", desc: "Create a gzipped archive" },
+      { cmd: "tar -xzf out.tar.gz", desc: "Extract a gzipped archive" },
+      { cmd: "tar -tzf out.tar.gz", desc: "List archive contents" },
+      { cmd: "gzip file", desc: "Compress a single file to file.gz" },
+      { cmd: "gunzip file.gz", desc: "Decompress a .gz file" },
+    ],
+    terminal: [
+      { cmd: "tar -czf logs.tar.gz logs/", output: "" },
+      { cmd: "ls -lh logs.tar.gz", output: "-rw-r--r-- 1 dev dev 4.2K Jun 30 12:20 logs.tar.gz" },
+      { cmd: "tar -tzf logs.tar.gz", output: "logs/\nlogs/app.log\nlogs/error.log" },
+    ],
+    quiz: [
+      {
+        question: "Which tar command creates a gzip-compressed archive?",
+        options: ["tar -xzf", "tar -czf", "tar -tzf", "tar -rf"],
+        answer: 1,
+      },
+      {
+        question: "What does the z flag add to a tar command?",
+        options: ["Encryption", "gzip compression", "Verbose output", "Listing"],
+        answer: 1,
+      },
+    ],
+  },
 ];

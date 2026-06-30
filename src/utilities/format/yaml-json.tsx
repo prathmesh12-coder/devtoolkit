@@ -20,12 +20,14 @@ export const meta: UtilityMeta = {
 export default function YamlJson() {
   const [input, setInput] = React.useState("");
   const [output, setOutput] = React.useState("");
+  const [outLang, setOutLang] = React.useState<"json" | "yaml">("json");
   const [error, setError] = React.useState<string | null>(null);
 
   function toJson() {
     try {
       const doc = yamlLoad(input);
       setOutput(JSON.stringify(doc, null, 2));
+      setOutLang("json");
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -37,6 +39,7 @@ export default function YamlJson() {
     try {
       const doc = JSON.parse(input);
       setOutput(yamlDump(doc, { indent: 2, lineWidth: -1 }));
+      setOutLang("yaml");
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -60,9 +63,10 @@ export default function YamlJson() {
           label="Input"
           value={input}
           onChange={setInput}
+          language="yaml"
           placeholder="Paste YAML or JSON…"
         />
-        <EditorPanel label="Output" value={output} readOnly copy />
+        <EditorPanel label="Output" value={output} readOnly copy language={outLang} />
       </div>
     </div>
   );

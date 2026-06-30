@@ -30,6 +30,11 @@ import {
   Database,
   HardDrive,
   TerminalSquare,
+  Pilcrow,
+  Quote,
+  Timer,
+  FileX2,
+  MonitorSmartphone,
 } from "lucide-react";
 import type { UtilityMeta, CategoryId } from "./types";
 
@@ -55,6 +60,7 @@ export const utilities: UtilityMeta[] = [
   { id: "jwt-decoder", title: "JWT Decoder", description: "Decode JSON Web Token header and payload and inspect claims (no verification).", category: "encode", keywords: ["jwt", "token", "decode", "json web token", "auth", "claims", "bearer"], icon: KeyRound },
   { id: "html-entities", title: "HTML Entity Encode / Decode", description: "Escape and unescape HTML special characters like < > & \" '.", category: "encode", keywords: ["html", "entities", "escape", "unescape", "encode", "decode", "ampersand"], icon: CodeXml },
   { id: "hex-text", title: "Hex ↔ Text Converter", description: "Convert text to hexadecimal bytes and back (UTF-8).", category: "encode", keywords: ["hex", "hexadecimal", "text", "ascii", "bytes", "encode", "decode"], icon: Hash },
+  { id: "number-base", title: "Number Base Converter", description: "Convert numbers between binary, octal, decimal and hexadecimal.", category: "encode", keywords: ["binary", "octal", "decimal", "hex", "hexadecimal", "base", "radix", "convert"], icon: Binary },
 
   // Crypto & Hashing
   { id: "hash-generator", title: "Hash Generator", description: "Compute MD5, SHA-1, SHA-256 and SHA-512 digests of any text.", category: "crypto", keywords: ["hash", "md5", "sha1", "sha256", "sha512", "digest", "checksum"], icon: Fingerprint },
@@ -70,17 +76,21 @@ export const utilities: UtilityMeta[] = [
   { id: "line-tools", title: "Line Tools (Sort / Dedupe / Trim)", description: "Sort, deduplicate, reverse, shuffle and trim lines of text.", category: "text", keywords: ["sort", "dedupe", "unique", "lines", "trim", "reverse", "shuffle"], icon: ListOrdered },
   { id: "slugify", title: "Slugify", description: "Turn any text into a clean, URL-friendly slug.", category: "text", keywords: ["slug", "slugify", "url", "permalink", "seo", "kebab"], icon: Link },
   { id: "text-counter", title: "Word & Character Counter", description: "Count characters, words, lines, and bytes in any text.", category: "text", keywords: ["count", "characters", "words", "lines", "bytes", "length"], icon: Calculator },
+  { id: "string-escape", title: "String Escaper", description: "Escape and unescape strings for JSON, JavaScript, and source code.", category: "text", keywords: ["escape", "unescape", "string", "json", "backslash", "quotes", "newline"], icon: Quote },
+  { id: "lorem-ipsum", title: "Lorem Ipsum Generator", description: "Generate placeholder text by words, sentences, or paragraphs.", category: "text", keywords: ["lorem", "ipsum", "placeholder", "dummy", "text", "filler"], icon: Pilcrow },
 
   // Time & Dates
   { id: "unix-timestamp", title: "Unix Timestamp Converter", description: "Convert between Unix epoch timestamps and human-readable dates.", category: "time", keywords: ["unix", "timestamp", "epoch", "date", "time", "convert", "iso"], icon: Clock },
   { id: "cron-explainer", title: "Cron Expression Explainer", description: "Translate cron schedules into plain English and test common patterns.", category: "time", keywords: ["cron", "crontab", "schedule", "expression", "explain", "job"], icon: CalendarClock },
   { id: "timezone-converter", title: "Timezone Converter", description: "See a moment in time across major timezones around the world.", category: "time", keywords: ["timezone", "utc", "convert", "time", "world clock", "offset"], icon: Globe },
+  { id: "duration-converter", title: "Duration Converter", description: "Convert a duration between seconds, minutes, hours and days, with a human-readable form.", category: "time", keywords: ["duration", "time", "seconds", "minutes", "hours", "days", "convert", "humanize"], icon: Timer },
 
   // Network
   { id: "cidr-calculator", title: "CIDR / Subnet Calculator", description: "Compute network, broadcast, mask and host range for an IPv4 CIDR block.", category: "network", keywords: ["cidr", "subnet", "ip", "ipv4", "netmask", "network", "broadcast", "range"], icon: Network },
   { id: "url-parser", title: "URL Parser", description: "Break a URL into protocol, host, path, and query parameters.", category: "network", keywords: ["url", "parse", "query", "params", "host", "path", "components"], icon: Link2 },
   { id: "http-status", title: "HTTP Status Codes", description: "Searchable reference of HTTP response status codes and their meanings.", category: "network", keywords: ["http", "status", "code", "response", "404", "500", "reference"], icon: ServerCog },
   { id: "chmod-calculator", title: "chmod Calculator", description: "Convert between octal, symbolic and checkbox file permissions.", category: "network", keywords: ["chmod", "permissions", "octal", "symbolic", "linux", "file", "rwx"], icon: FileLock2 },
+  { id: "user-agent-parser", title: "User-Agent Parser", description: "Break down a browser User-Agent string into browser, engine, and OS.", category: "network", keywords: ["user-agent", "ua", "browser", "parse", "os", "device", "http"], icon: MonitorSmartphone },
 
   // DevOps & Data
   { id: "kubectl-builder", title: "kubectl Command Builder", description: "Assemble common kubectl commands from a simple form.", category: "devops", keywords: ["kubectl", "kubernetes", "k8s", "command", "builder", "get", "logs"], icon: Ship },
@@ -88,6 +98,7 @@ export const utilities: UtilityMeta[] = [
   { id: "sql-formatter", title: "SQL Formatter", description: "Beautify and standardize SQL queries across many dialects.", category: "devops", keywords: ["sql", "format", "beautify", "query", "pretty", "spark", "presto", "postgres"], icon: Database },
   { id: "byte-converter", title: "Data Size Converter", description: "Convert between bytes, KB/MB/GB/TB and binary KiB/MiB/GiB units.", category: "devops", keywords: ["bytes", "size", "data", "kb", "mb", "gb", "tb", "kib", "mib", "convert"], icon: HardDrive },
   { id: "curl-builder", title: "curl Command Builder", description: "Build a curl command with method, headers, and a request body.", category: "devops", keywords: ["curl", "http", "request", "api", "headers", "command", "builder"], icon: TerminalSquare },
+  { id: "gitignore-generator", title: ".gitignore Generator", description: "Build a .gitignore file from common language and tooling presets.", category: "devops", keywords: ["gitignore", "git", "ignore", "generate", "node", "python", "terraform"], icon: FileX2 },
 ];
 
 export const utilityMap: Map<string, UtilityMeta> = new Map(

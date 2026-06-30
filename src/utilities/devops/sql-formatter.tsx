@@ -52,8 +52,8 @@ export default function SqlFormatter() {
       </div>
       {error && <Callout tone="error">{error}</Callout>}
       <div className="grid gap-4 lg:grid-cols-2">
-        <EditorPanel label="Input" value={input} onChange={setInput} placeholder="select * from users where id=1" />
-        <EditorPanel label="Formatted" value={output} readOnly copy />
+        <EditorPanel label="Input" value={input} onChange={setInput} language="sql" placeholder="select * from users where id=1" />
+        <EditorPanel label="Formatted" value={output} readOnly copy language="sql" />
       </div>
     </div>
   );

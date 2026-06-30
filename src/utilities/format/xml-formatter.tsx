@@ -74,8 +74,8 @@ export default function XmlFormatter() {
       {error && <Callout tone="error">{error}</Callout>}
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <EditorPanel label="Input" value={input} onChange={setInput} placeholder="<root><child>…</child></root>" />
-        <EditorPanel label="Output" value={output} readOnly copy />
+        <EditorPanel label="Input" value={input} onChange={setInput} language="xml" placeholder="<root><child>…</child></root>" />
+        <EditorPanel label="Output" value={output} readOnly copy language="xml" />
       </div>
     </div>
   );

@@ -232,4 +232,91 @@ export const dockerLessons: LessonContent[] = [
       },
     ],
   },
+  {
+    slug: "debugging",
+    title: "Inspecting & Debugging Containers",
+    level: "Intermediate",
+    summary: "Look inside running containers with logs, exec, and inspect.",
+    explanation: [
+      "When something misbehaves, docker logs shows a container's output; add -f to follow it live. docker exec lets you run a command (often a shell) inside a running container.",
+      "docker inspect dumps detailed JSON about a container or image — its mounts, networks, environment, and more. docker stats shows live CPU and memory usage.",
+      "These four commands cover the vast majority of day-to-day container troubleshooting.",
+    ],
+    cheatsheet: [
+      { cmd: "docker logs -f <name>", desc: "Follow a container's logs" },
+      { cmd: "docker exec -it <name> sh", desc: "Open a shell inside it" },
+      { cmd: "docker inspect <name>", desc: "Full JSON details" },
+      { cmd: "docker stats", desc: "Live resource usage" },
+      { cmd: "docker top <name>", desc: "Processes running inside" },
+    ],
+    terminal: [
+      {
+        cmd: "docker logs -f web",
+        output: "10.0.0.1 - GET / 200\n10.0.0.1 - GET /health 200",
+      },
+      {
+        cmd: "docker exec -it web sh",
+        output: "/ # ls",
+        note: "You are now inside the container; type exit to leave.",
+      },
+    ],
+    quiz: [
+      {
+        question: "Which command opens an interactive shell inside a running container?",
+        options: ["docker run -it", "docker exec -it <name> sh", "docker shell", "docker attach"],
+        answer: 1,
+      },
+      {
+        question: "What does adding -f to docker logs do?",
+        options: ["Filters errors", "Follows logs in real time", "Formats as JSON", "Forces a restart"],
+        answer: 1,
+      },
+    ],
+  },
+  {
+    slug: "cleanup",
+    title: "Cleaning Up Disk Space",
+    level: "Intermediate",
+    summary: "Reclaim space by pruning unused images, containers, and volumes.",
+    explanation: [
+      "Docker accumulates stopped containers, dangling images, unused networks, and orphaned volumes over time, which can quietly fill your disk.",
+      "docker system df shows what is using space. docker system prune removes unused data; add -a to also remove unused images, and --volumes to include volumes.",
+      "Be careful: pruning volumes deletes data. Always check what will be removed before confirming.",
+    ],
+    cheatsheet: [
+      { cmd: "docker system df", desc: "Show Docker disk usage" },
+      { cmd: "docker container prune", desc: "Remove all stopped containers" },
+      { cmd: "docker image prune -a", desc: "Remove unused images" },
+      { cmd: "docker volume prune", desc: "Remove unused volumes (careful!)" },
+      { cmd: "docker system prune -a", desc: "Remove all unused data" },
+    ],
+    terminal: [
+      {
+        cmd: "docker system df",
+        output:
+          "TYPE            TOTAL   ACTIVE   SIZE      RECLAIMABLE\nImages          12      3        4.1GB     2.8GB (68%)\nContainers      5       2        120MB     90MB (75%)\nLocal Volumes   4       1        1.2GB     800MB (66%)",
+      },
+      {
+        cmd: "docker image prune -a",
+        output: "Deleted Images:\nuntagged: old-app:1.0\nTotal reclaimed space: 2.8GB",
+      },
+    ],
+    quiz: [
+      {
+        question: "Which command shows how much disk space Docker is using?",
+        options: ["docker du", "docker system df", "docker space", "docker usage"],
+        answer: 1,
+      },
+      {
+        question: "What is risky about `docker volume prune`?",
+        options: [
+          "It restarts the daemon",
+          "It can permanently delete data in unused volumes",
+          "It removes images you need",
+          "It changes networks",
+        ],
+        answer: 1,
+      },
+    ],
+  },
 ];
