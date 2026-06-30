@@ -8,6 +8,7 @@ import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Callout } from "@/components/tools/callout";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "number-base",
@@ -52,8 +53,17 @@ export default function NumberBase() {
         ]
       : [];
 
+  function loadExample() {
+    setRadix(10);
+    setInput("255");
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>decimal <code>255</code> equals <code>0xFF</code> (hex) and <code>11111111</code> (binary).</>}
+      />
       <div className="flex items-end gap-2">
         <div className="flex-1 space-y-2">
           <Label>Number</Label>

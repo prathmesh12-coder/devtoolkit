@@ -5,6 +5,9 @@ import { Calculator } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE = "DevToolkit puts every small tool a DevOps engineer needs in one place.\nNo sign-up. No tracking.";
 
 export const meta: UtilityMeta = {
   id: "text-counter",
@@ -39,6 +42,10 @@ export default function TextCounter() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setText(SAMPLE)}
+        note={<>counts update live as you type — characters, words, lines, sentences and bytes.</>}
+      />
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {items.map((i) => (
           <div key={i.label} className="rounded-md border border-border bg-card p-4 text-center">

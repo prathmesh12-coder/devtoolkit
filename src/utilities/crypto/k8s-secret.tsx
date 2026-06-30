@@ -5,7 +5,10 @@ import { Lock } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = "s3cr3t-password";
 
 export const meta: UtilityMeta = {
   id: "k8s-secret",
@@ -32,9 +35,9 @@ export default function K8sSecret() {
   const [output, setOutput] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(fn: (s: string) => string) {
+  function run(fn: (s: string) => string, source = input) {
     try {
-      setOutput(fn(input));
+      setOutput(fn(source));
       setError(null);
     } catch {
       setError("Could not decode — is this valid Base64?");
@@ -42,8 +45,17 @@ export default function K8sSecret() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(encode, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>s3cr3t-password</code> encodes to <code>czNjcjN0LXBhc3N3b3Jk</code> for a Secret&apos;s data field.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run(encode)}>Encode for Secret</Button>
         <Button variant="secondary" onClick={() => run(decode)}>

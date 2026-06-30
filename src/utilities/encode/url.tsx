@@ -5,7 +5,10 @@ import { Link2 } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = "https://example.com/search?q=hello world&lang=en";
 
 export const meta: UtilityMeta = {
   id: "url-encode",
@@ -22,12 +25,12 @@ export default function UrlTool() {
   const [component, setComponent] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(mode: "encode" | "decode") {
+  function run(mode: "encode" | "decode", source = input) {
     try {
       if (mode === "encode") {
-        setOutput(component ? encodeURIComponent(input) : encodeURI(input));
+        setOutput(component ? encodeURIComponent(source) : encodeURI(source));
       } else {
-        setOutput(component ? decodeURIComponent(input) : decodeURI(input));
+        setOutput(component ? decodeURIComponent(source) : decodeURI(source));
       }
       setError(null);
     } catch {
@@ -36,8 +39,17 @@ export default function UrlTool() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run("encode", SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>a space becomes <code>%20</code> — e.g. <code>hello world</code> → <code>hello%20world</code>.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run("encode")}>Encode</Button>
         <Button variant="secondary" onClick={() => run("decode")}>

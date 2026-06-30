@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "kubectl-builder",
@@ -42,8 +43,22 @@ export default function KubectlBuilder() {
     return parts.join(" ");
   }, [action, resource, name, namespace, allNamespaces, output, watch, isLogs]);
 
+  function loadExample() {
+    setAction("get");
+    setResource("pods");
+    setName("");
+    setNamespace("");
+    setAllNamespaces(true);
+    setOutput("wide");
+    setWatch(false);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>choices assemble into a command like <code>kubectl get pods --all-namespaces -o wide</code>.</>}
+      />
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label>Action</Label>

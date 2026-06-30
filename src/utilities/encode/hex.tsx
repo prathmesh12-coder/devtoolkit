@@ -5,7 +5,10 @@ import { Hash } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = "Hello";
 
 export const meta: UtilityMeta = {
   id: "hex-text",
@@ -37,9 +40,9 @@ export default function HexTool() {
   const [output, setOutput] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(fn: (s: string) => string) {
+  function run(fn: (s: string) => string, source = input) {
     try {
-      setOutput(fn(input));
+      setOutput(fn(source));
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -47,8 +50,17 @@ export default function HexTool() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(textToHex, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>Hello</code> becomes <code>48 65 6c 6c 6f</code> (UTF-8 bytes).</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run(textToHex)}>Text → Hex</Button>
         <Button variant="secondary" onClick={() => run(hexToText)}>

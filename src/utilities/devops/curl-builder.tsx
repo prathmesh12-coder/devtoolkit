@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "curl-builder",
@@ -38,8 +39,22 @@ export default function CurlBuilder() {
     return parts.join(" \\\n");
   }, [method, url, headers, body]);
 
+  function loadExample() {
+    setMethod("POST");
+    setUrl("https://api.example.com/v1/items");
+    setHeaders([
+      { k: "Content-Type", v: "application/json" },
+      { k: "Authorization", v: "Bearer <token>" },
+    ]);
+    setBody('{"name":"widget","qty":5}');
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>your choices build a ready-to-run command like <code>curl -X POST … -H … -d …</code>.</>}
+      />
       <div className="flex gap-2">
         <div className="w-32 space-y-2">
           <Label>Method</Label>

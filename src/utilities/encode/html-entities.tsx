@@ -5,6 +5,9 @@ import { CodeXml } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE = '<a href="/x">Tom & Jerry</a>';
 
 export const meta: UtilityMeta = {
   id: "html-entities",
@@ -37,8 +40,17 @@ export default function HtmlEntities() {
   const [input, setInput] = React.useState("");
   const [output, setOutput] = React.useState("");
 
+  function loadExample() {
+    setInput(SAMPLE);
+    setOutput(escapeHtml(SAMPLE));
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>&lt;a&gt;</code> and <code>&amp;</code> become <code>&amp;lt;a&amp;gt;</code> and <code>&amp;amp;</code>.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => setOutput(escapeHtml(input))}>Escape</Button>
         <Button variant="secondary" onClick={() => setOutput(unescapeHtml(input))}>

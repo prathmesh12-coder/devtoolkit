@@ -4,6 +4,7 @@ import * as React from "react";
 import { FileX2 } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "gitignore-generator",
@@ -42,6 +43,10 @@ export default function GitignoreGenerator() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setSelected(["Node", "Python", "macOS"])}
+        note={<>pick presets and their ignore rules are merged into one <code>.gitignore</code> file.</>}
+      />
       <div className="flex flex-wrap gap-2">
         {Object.keys(PRESETS).map((name) => {
           const on = selected.includes(name);

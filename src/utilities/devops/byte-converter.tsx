@@ -6,6 +6,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "byte-converter",
@@ -40,8 +41,17 @@ export default function ByteConverter() {
 
   const bytes = (Number(value) || 0) * UNITS[unitIdx].factor;
 
+  function loadExample() {
+    setUnitIdx(6); // MiB
+    setValue("1024");
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>1024 MiB</code> equals <code>1 GiB</code> (and ~1.07 GB in decimal units).</>}
+      />
       <div className="flex items-end gap-2">
         <div className="flex-1 space-y-2">
           <Label>Value</Label>

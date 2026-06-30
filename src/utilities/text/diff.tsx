@@ -6,7 +6,11 @@ import { GitCompare } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { cn } from "@/lib/utils";
+
+const SAMPLE_LEFT = "name: web\nreplicas: 2\nimage: nginx:1.25";
+const SAMPLE_RIGHT = "name: web\nreplicas: 4\nimage: nginx:1.27";
 
 export const meta: UtilityMeta = {
   id: "text-diff",
@@ -23,8 +27,17 @@ export default function TextDiff() {
 
   const parts = React.useMemo(() => diffLines(left, right), [left, right]);
 
+  function loadExample() {
+    setLeft(SAMPLE_LEFT);
+    setRight(SAMPLE_RIGHT);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>changed lines are highlighted — additions in green, removals in red.</>}
+      />
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="space-y-2">
           <Label>Original</Label>

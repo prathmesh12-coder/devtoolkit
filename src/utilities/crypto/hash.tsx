@@ -9,6 +9,9 @@ import { Fingerprint } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE = "The quick brown fox jumps over the lazy dog";
 
 export const meta: UtilityMeta = {
   id: "hash-generator",
@@ -36,6 +39,10 @@ export default function HashGenerator() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setInput(SAMPLE)}
+        note={<>any text produces a fixed-length digest, e.g. SHA-256 of <code>abc</code> = <code>ba7816bf…</code>.</>}
+      />
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium text-muted-foreground">Input text</span>
         <Textarea

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "duration-converter",
@@ -55,8 +56,17 @@ export default function DurationConverter() {
   const totalSeconds = (Number(value) || 0) * UNITS[unitIdx].seconds;
   const human = humanize(totalSeconds);
 
+  function loadExample() {
+    setUnitIdx(1);
+    setValue("3661");
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>3661</code> seconds becomes <code>1h 1m 1s</code> and its equivalents.</>}
+      />
       <div className="flex items-end gap-2">
         <div className="flex-1 space-y-2">
           <Label>Duration</Label>

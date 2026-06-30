@@ -6,6 +6,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "chmod-calculator",
@@ -42,6 +43,10 @@ export default function ChmodCalculator() {
 
   return (
     <div className="space-y-5">
+      <ExampleBar
+        onLoad={() => setPerms([6, 4, 4])}
+        note={<><code>644</code> means <code>rw-r--r--</code> — owner can read/write, everyone else read-only.</>}
+      />
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label>Octal</Label>

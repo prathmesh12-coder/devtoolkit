@@ -5,6 +5,7 @@ import { ServerCog } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "http-status",
@@ -64,6 +65,10 @@ export default function HttpStatus() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setQ("404")}
+        note={<>search <code>404</code> to find &ldquo;Not Found&rdquo;, or type a keyword like <code>timeout</code>.</>}
+      />
       <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by code or name (e.g. 404, timeout)…" />
       <div className="space-y-2">
         {filtered.map((c) => (

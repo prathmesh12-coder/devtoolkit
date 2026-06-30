@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "uuid-generator",
@@ -46,6 +47,11 @@ export default function UuidGenerator() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={generate}
+        loadLabel="Generate"
+        note={<>each click creates random v4 IDs like <code>3f2504e0-4f89-41d3-9a0c-0305e82c3301</code>.</>}
+      />
       <div className="flex flex-wrap items-end gap-3">
         <div className="space-y-2">
           <Label>How many</Label>

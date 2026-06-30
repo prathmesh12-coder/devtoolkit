@@ -6,6 +6,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "case-converter",
@@ -43,6 +44,10 @@ export default function CaseConverter() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setInput("hello world example")}
+        note={<><code>hello world</code> becomes <code>helloWorld</code>, <code>hello_world</code>, <code>HELLO_WORLD</code>, and more.</>}
+      />
       <div className="space-y-2">
         <Label>Input</Label>
         <Textarea value={input} onChange={(e) => setInput(e.target.value)} rows={4} placeholder="Hello World example" />

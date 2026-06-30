@@ -8,6 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Callout } from "@/components/tools/callout";
 import { Badge } from "@/components/ui/badge";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE_PATTERN = "\\b[\\w.]+@[\\w.]+\\.\\w+\\b";
+const SAMPLE_TEXT = "Contact ada@example.com or ops@dev.io for access.";
 
 export const meta: UtilityMeta = {
   id: "regex-tester",
@@ -62,8 +66,18 @@ export default function RegexTester() {
     }
   }
 
+  function loadExample() {
+    setPattern(SAMPLE_PATTERN);
+    setFlags(["g"]);
+    setText(SAMPLE_TEXT);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>an email pattern highlights every match in the text, e.g. <code>ada@example.com</code>.</>}
+      />
       <div className="space-y-2">
         <Label>Pattern</Label>
         <div className="flex items-center gap-2">

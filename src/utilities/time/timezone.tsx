@@ -5,6 +5,7 @@ import { Globe } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "timezone-converter",
@@ -44,6 +45,10 @@ export default function TimezoneConverter() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setValue("2026-01-01T09:00")}
+        note={<>one local time is shown across UTC, New York, London, Tokyo and more at once.</>}
+      />
       <div className="space-y-2">
         <Label>Local time ({localZone})</Label>
         <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} className="w-auto" />

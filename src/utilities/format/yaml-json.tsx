@@ -6,7 +6,10 @@ import { ArrowRightLeft } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = "name: web\nreplicas: 3\nports:\n  - 80\n  - 443\nenabled: true";
 
 export const meta: UtilityMeta = {
   id: "yaml-json",
@@ -23,9 +26,9 @@ export default function YamlJson() {
   const [outLang, setOutLang] = React.useState<"json" | "yaml">("json");
   const [error, setError] = React.useState<string | null>(null);
 
-  function toJson() {
+  function toJson(source = input) {
     try {
-      const doc = yamlLoad(input);
+      const doc = yamlLoad(source);
       setOutput(JSON.stringify(doc, null, 2));
       setOutLang("json");
       setError(null);
@@ -33,6 +36,11 @@ export default function YamlJson() {
       setError((e as Error).message);
       setOutput("");
     }
+  }
+
+  function loadExample() {
+    setInput(SAMPLE);
+    toJson(SAMPLE);
   }
 
   function toYaml() {
@@ -49,8 +57,12 @@ export default function YamlJson() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>name: web</code> (YAML) converts to <code>{'{ "name": "web" }'}</code> (JSON), and back.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
-        <Button onClick={toJson}>YAML → JSON</Button>
+        <Button onClick={() => toJson()}>YAML → JSON</Button>
         <Button variant="secondary" onClick={toYaml}>
           JSON → YAML
         </Button>

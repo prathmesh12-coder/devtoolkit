@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Callout } from "@/components/tools/callout";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "cidr-calculator",
@@ -82,6 +83,10 @@ export default function CidrCalculator() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setInput("192.168.1.0/26")}
+        note={<><code>192.168.1.0/26</code> yields 64 addresses, range <code>.1</code>–<code>.62</code>.</>}
+      />
       <div className="space-y-2">
         <Label>CIDR block</Label>
         <Input value={input} onChange={(e) => setInput(e.target.value)} className="font-mono" placeholder="192.168.1.0/24" />

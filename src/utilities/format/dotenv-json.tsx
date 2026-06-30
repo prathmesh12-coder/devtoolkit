@@ -5,7 +5,10 @@ import { FileCog } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = "# App config\nNODE_ENV=production\nPORT=8080\nDATABASE_URL=postgres://localhost/app\nDEBUG=false";
 
 export const meta: UtilityMeta = {
   id: "dotenv-json",
@@ -48,9 +51,9 @@ export default function DotenvJson() {
   const [output, setOutput] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(fn: (s: string) => string) {
+  function run(fn: (s: string) => string, source = input) {
     try {
-      setOutput(fn(input));
+      setOutput(fn(source));
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -58,8 +61,17 @@ export default function DotenvJson() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(envToJson, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<><code>PORT=8080</code> becomes <code>{'{ "PORT": "8080" }'}</code>, comments ignored.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run(envToJson)}>.env → JSON</Button>
         <Button variant="secondary" onClick={() => run(jsonToEnv)}>

@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "hmac-generator",
@@ -39,8 +40,18 @@ export default function HmacGenerator() {
     return fns[algo](message, secret).toString();
   }, [message, secret, algo]);
 
+  function loadExample() {
+    setSecret("my-secret-key");
+    setMessage("payload-to-sign");
+    setAlgo("SHA-256");
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>a message + secret key produce a signature used to verify webhooks and APIs.</>}
+      />
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label>Secret key</Label>

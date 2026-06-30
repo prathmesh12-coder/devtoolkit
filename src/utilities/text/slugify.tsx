@@ -6,6 +6,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "slugify",
@@ -34,6 +35,10 @@ export default function Slugify() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setInput("My Awesome Blog Post! (2026)")}
+        note={<><code>My Awesome Blog Post!</code> becomes <code>my-awesome-blog-post</code>.</>}
+      />
       <div className="space-y-2">
         <Label>Text</Label>
         <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="My Awesome Blog Post! (2026)" />

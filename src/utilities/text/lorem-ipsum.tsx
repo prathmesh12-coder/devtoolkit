@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "lorem-ipsum",
@@ -54,6 +55,11 @@ export default function LoremIpsum() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={generate}
+        loadLabel="Generate"
+        note={<>produces placeholder text like <code>Lorem ipsum dolor sit amet…</code> in your chosen amount.</>}
+      />
       <div className="flex flex-wrap items-end gap-3">
         <div className="space-y-2">
           <Label>How many</Label>

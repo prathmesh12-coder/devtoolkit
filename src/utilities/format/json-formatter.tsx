@@ -6,6 +6,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
 
 export const meta: UtilityMeta = {
@@ -25,14 +26,14 @@ export default function JsonFormatter() {
   const [indent, setIndent] = React.useState("2");
   const [error, setError] = React.useState<string | null>(null);
 
-  function format(minify = false) {
-    if (!input.trim()) {
+  function format(minify = false, source = input) {
+    if (!source.trim()) {
       setError("Paste some JSON to get started.");
       setOutput("");
       return;
     }
     try {
-      const parsed = JSON.parse(input);
+      const parsed = JSON.parse(source);
       const space = minify ? 0 : indent === "tab" ? "\t" : Number(indent);
       setOutput(JSON.stringify(parsed, null, space));
       setError(null);
@@ -42,8 +43,17 @@ export default function JsonFormatter() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    format(false, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>minified <code>{'{"a":1,"b":[2]}'}</code> becomes neatly indented, multi-line JSON.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => format(false)}>Pretty print</Button>
         <Button variant="secondary" onClick={() => format(true)}>
@@ -59,16 +69,6 @@ export default function JsonFormatter() {
             </Select>
           </div>
         </div>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            setInput(SAMPLE);
-            setError(null);
-            setOutput("");
-          }}
-        >
-          Load sample
-        </Button>
       </div>
 
       {error && <Callout tone="error">{error}</Callout>}

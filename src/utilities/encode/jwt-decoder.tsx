@@ -4,8 +4,12 @@ import * as React from "react";
 import { KeyRound } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
 import { Textarea } from "@/components/ui/textarea";
+
+const SAMPLE =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFkYSBMb3ZlbGFjZSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.iVNl3vPpAcVDxFznfElVZl7L4mFhFhYf0gWnQ2oxL2c";
 
 export const meta: UtilityMeta = {
   id: "jwt-decoder",
@@ -58,6 +62,10 @@ export default function JwtDecoder() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setToken(SAMPLE)}
+        note={<>a <code>header.payload.signature</code> token is split and decoded into readable JSON claims.</>}
+      />
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium text-muted-foreground">Encoded token</span>
         <Textarea

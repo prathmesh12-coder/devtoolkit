@@ -6,6 +6,9 @@ import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Callout } from "@/components/tools/callout";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE = "https://user:pass@api.example.com:8443/v1/items?page=2&limit=50#section";
 
 export const meta: UtilityMeta = {
   id: "url-parser",
@@ -44,6 +47,10 @@ export default function UrlParser() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setInput(SAMPLE)}
+        note={<>a full URL is split into protocol, host, port, path and each query parameter.</>}
+      />
       <div className="space-y-2">
         <Label>URL</Label>
         <Input value={input} onChange={(e) => setInput(e.target.value)} className="font-mono" />

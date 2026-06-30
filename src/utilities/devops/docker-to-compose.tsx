@@ -4,7 +4,11 @@ import * as React from "react";
 import { Container } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE =
+  "docker run -d --name web -p 8080:80 -e TZ=UTC -v ./html:/usr/share/nginx/html --restart unless-stopped nginx:alpine";
 
 export const meta: UtilityMeta = {
   id: "docker-run-to-compose",
@@ -105,9 +109,7 @@ function convert(input: string): string {
 }
 
 export default function DockerToCompose() {
-  const [input, setInput] = React.useState(
-    "docker run -d --name web -p 8080:80 -e TZ=UTC -v ./html:/usr/share/nginx/html --restart unless-stopped nginx:alpine"
-  );
+  const [input, setInput] = React.useState(SAMPLE);
 
   const { output, error } = React.useMemo(() => {
     if (!input.trim()) return { output: "", error: null as string | null };
@@ -120,6 +122,10 @@ export default function DockerToCompose() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setInput(SAMPLE)}
+        note={<>a <code>docker run</code> with ports, env and volumes becomes a Compose service block.</>}
+      />
       {error && <Callout tone="error">{error}</Callout>}
       <div className="grid gap-4 lg:grid-cols-2">
         <EditorPanel label="docker run command" value={input} onChange={setInput} placeholder="docker run -p 80:80 nginx" />

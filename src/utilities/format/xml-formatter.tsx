@@ -5,7 +5,10 @@ import { Code2 } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = '<note><to>Team</to><from>Ops</from><body>Deploy at 5pm</body></note>';
 
 export const meta: UtilityMeta = {
   id: "xml-formatter",
@@ -42,19 +45,19 @@ export default function XmlFormatter() {
   const [output, setOutput] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(minify: boolean) {
-    if (!input.trim()) {
+  function run(minify: boolean, source = input) {
+    if (!source.trim()) {
       setError("Paste some XML to format.");
       return;
     }
     try {
       // Basic validity check via DOMParser when available.
       if (typeof window !== "undefined" && window.DOMParser) {
-        const doc = new DOMParser().parseFromString(input, "application/xml");
+        const doc = new DOMParser().parseFromString(source, "application/xml");
         const err = doc.querySelector("parsererror");
         if (err) throw new Error("Invalid XML: " + err.textContent?.split("\n")[0]);
       }
-      setOutput(minify ? input.replace(/>\s+</g, "><").trim() : formatXml(input));
+      setOutput(minify ? source.replace(/>\s+</g, "><").trim() : formatXml(source));
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -62,8 +65,17 @@ export default function XmlFormatter() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(false, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>a single-line <code>{"<note>…</note>"}</code> becomes indented, readable XML.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run(false)}>Pretty print</Button>
         <Button variant="secondary" onClick={() => run(true)}>

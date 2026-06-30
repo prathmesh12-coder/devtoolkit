@@ -7,6 +7,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Callout } from "@/components/tools/callout";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "cron-explainer",
@@ -39,6 +40,10 @@ export default function CronExplainer() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setExpr("0 9 * * 1-5")}
+        note={<><code>0 9 * * 1-5</code> reads as &ldquo;at 09:00, Monday through Friday&rdquo;.</>}
+      />
       <div className="space-y-2">
         <Label>Cron expression</Label>
         <Input value={expr} onChange={(e) => setExpr(e.target.value)} className="font-mono text-base" placeholder="* * * * *" />

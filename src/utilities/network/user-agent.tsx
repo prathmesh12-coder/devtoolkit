@@ -6,6 +6,10 @@ import type { UtilityMeta } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
 export const meta: UtilityMeta = {
   id: "user-agent-parser",
@@ -65,6 +69,10 @@ export default function UserAgentParser() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={() => setUa(SAMPLE)}
+        note={<>a raw UA string is broken down into browser, engine, OS and device type.</>}
+      />
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>User-Agent string</Label>

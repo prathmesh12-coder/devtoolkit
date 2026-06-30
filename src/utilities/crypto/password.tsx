@@ -6,6 +6,7 @@ import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "password-generator",
@@ -56,6 +57,11 @@ export default function PasswordGenerator() {
 
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={generate}
+        loadLabel="Generate"
+        note={<>mix character sets and length to get strong secrets like <code>k9$Wq2!zR…</code>.</>}
+      />
       <div className="rounded-md border border-border bg-card p-4">
         <div className="flex items-center justify-between gap-3">
           <code className="break-all font-mono text-lg">{value || "Select at least one character set"}</code>

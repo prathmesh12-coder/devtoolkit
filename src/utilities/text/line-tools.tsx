@@ -5,6 +5,9 @@ import { ListOrdered } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE = "banana\napple\ncherry\napple\nbanana";
 
 export const meta: UtilityMeta = {
   id: "line-tools",
@@ -22,8 +25,17 @@ export default function LineTools() {
   const lines = () => input.split("\n");
   const apply = (fn: (l: string[]) => string[]) => setOutput(fn(lines()).join("\n"));
 
+  function loadExample() {
+    setInput(SAMPLE);
+    setOutput([...new Set(SAMPLE.split("\n"))].sort((a, b) => a.localeCompare(b)).join("\n"));
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>a list with duplicates is sorted and de-duplicated into unique, ordered lines.</>}
+      />
       <div className="flex flex-wrap gap-2">
         <Button variant="secondary" onClick={() => apply((l) => [...l].sort((a, b) => a.localeCompare(b)))}>
           Sort A→Z

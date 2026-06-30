@@ -7,7 +7,10 @@ import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = "select id,name,email from users u join orders o on o.user_id=u.id where u.active=true order by name";
 
 export const meta: UtilityMeta = {
   id: "sql-formatter",
@@ -26,9 +29,9 @@ export default function SqlFormatter() {
   const [dialect, setDialect] = React.useState("sql");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run() {
+  function run(source = input) {
     try {
-      setOutput(formatSql(input, { language: dialect as never, keywordCase: "upper" }));
+      setOutput(formatSql(source, { language: dialect as never, keywordCase: "upper" }));
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -36,10 +39,19 @@ export default function SqlFormatter() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>a cramped one-line query is reformatted with uppercase keywords and clean indentation.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
-        <Button onClick={run}>Format</Button>
+        <Button onClick={() => run()}>Format</Button>
         <div className="w-40">
           <Select value={dialect} onChange={(e) => setDialect(e.target.value)}>
             {DIALECTS.map((d) => (

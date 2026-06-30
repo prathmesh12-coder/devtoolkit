@@ -5,6 +5,9 @@ import { Quote } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
+
+const SAMPLE = 'Line one\nLine "two" with a tab\there';
 
 export const meta: UtilityMeta = {
   id: "string-escape",
@@ -28,9 +31,9 @@ export default function StringEscape() {
   const [output, setOutput] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(fn: (s: string) => string) {
+  function run(fn: (s: string) => string, source = input) {
     try {
-      setOutput(fn(input));
+      setOutput(fn(source));
       setError(null);
     } catch {
       setError("Could not unescape — check for invalid escape sequences.");
@@ -38,8 +41,17 @@ export default function StringEscape() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(escape, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>a real newline becomes <code>\n</code> and <code>&quot;</code> becomes <code>\&quot;</code>, ready to paste into code.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run(escape)}>Escape</Button>
         <Button variant="secondary" onClick={() => run(unescape)}>

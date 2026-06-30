@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/tools/copy-button";
+import { ExampleBar } from "@/components/tools/example-bar";
 
 export const meta: UtilityMeta = {
   id: "unix-timestamp",
@@ -62,6 +63,11 @@ export default function TimestampConverter() {
         <div className="mt-1 font-mono text-2xl tabular-nums">{Math.floor(now / 1000)}</div>
         <div className="text-sm text-muted-foreground">{new Date(now).toString()}</div>
       </div>
+
+      <ExampleBar
+        onLoad={() => setInput("1700000000")}
+        note={<><code>1700000000</code> converts to a readable date (Nov 14, 2023), and dates convert back.</>}
+      />
 
       <div className="space-y-2">
         <Label>Timestamp or date</Label>

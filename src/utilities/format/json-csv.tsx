@@ -5,7 +5,10 @@ import { Table } from "lucide-react";
 import type { UtilityMeta } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { EditorPanel } from "@/components/tools/editor-panel";
+import { ExampleBar } from "@/components/tools/example-bar";
 import { Callout } from "@/components/tools/callout";
+
+const SAMPLE = '[{"id":1,"name":"Ada","role":"admin"},{"id":2,"name":"Linus","role":"user"}]';
 
 export const meta: UtilityMeta = {
   id: "json-csv",
@@ -80,9 +83,9 @@ export default function JsonCsv() {
   const [output, setOutput] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
 
-  function run(fn: (s: string) => string) {
+  function run(fn: (s: string) => string, source = input) {
     try {
-      setOutput(fn(input));
+      setOutput(fn(source));
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -90,8 +93,17 @@ export default function JsonCsv() {
     }
   }
 
+  function loadExample() {
+    setInput(SAMPLE);
+    run(jsonToCsv, SAMPLE);
+  }
+
   return (
     <div className="space-y-4">
+      <ExampleBar
+        onLoad={loadExample}
+        note={<>an array of <code>{'{id, name}'}</code> objects becomes a CSV table with a header row.</>}
+      />
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => run(jsonToCsv)}>JSON → CSV</Button>
         <Button variant="secondary" onClick={() => run(csvToJson)}>
