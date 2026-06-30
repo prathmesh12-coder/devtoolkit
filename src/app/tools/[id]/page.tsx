@@ -7,6 +7,8 @@ import { TrackRecent } from "@/components/track-recent";
 import { ToolRenderer } from "@/components/tool-renderer";
 import { getUtility, utilities } from "@/lib/registry";
 import { categoryMap } from "@/lib/categories";
+import { getToolHowItWorks } from "@/lib/tool-help";
+import { HowItWorks } from "@/components/tools/how-it-works";
 
 export function generateStaticParams() {
   return utilities.map((u) => ({ id: u.id }));
@@ -33,6 +35,7 @@ export default async function ToolPage({
   if (!tool) notFound();
 
   const category = categoryMap[tool.category];
+  const howItWorks = getToolHowItWorks(tool.id);
 
   return (
     <Shell>
@@ -57,6 +60,8 @@ export default async function ToolPage({
             <p className="text-muted-foreground">{tool.description}</p>
           </div>
         </div>
+
+        {howItWorks && <HowItWorks text={howItWorks} />}
 
         <div className="rounded-xl border border-border bg-card/50 p-4 sm:p-6">
           <ToolRenderer id={tool.id} />
