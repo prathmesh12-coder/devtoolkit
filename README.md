@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧰 DevToolkit
 
-## Getting Started
+**Every small tool a DevOps or Data engineer needs — in one fast, beautiful place. No sign-up. No tracking. Nothing leaves your browser.**
 
-First, run the development server:
+Stop Googling "json pretty print online" or "base64 decode". DevToolkit puts dozens of everyday utilities and hands-on Linux / Docker / Kubernetes practice behind a single search box.
+
+---
+
+## ✨ What you can do
+
+🔧 **Use 30+ instant tools** — format JSON & YAML, decode JWTs, generate hashes & passwords, calculate subnets, build `kubectl`/`curl`/Docker commands, convert timestamps, and much more.
+
+🔍 **Find anything in a second** — press `Cmd/Ctrl + K` anywhere to fuzzy-search every tool and lesson.
+
+🎓 **Learn by doing** — guided **Linux, Docker, and Kubernetes** lessons (beginner → advanced) with cheatsheets, a safe simulated terminal, and quick quizzes.
+
+🔒 **Stay private** — everything runs 100% in your browser. Your data is never uploaded.
+
+🌗 **Look good doing it** — clean, modern UI with dark & light modes.
+
+---
+
+## 🚀 Run it locally
+
+You need [Node.js](https://nodejs.org) 18+ installed.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install      # install dependencies
+npm run dev      # start the app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open **http://localhost:3000** in your browser. That's it. 🎉
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build    # build for production
+npm run start    # run the production build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧭 What's inside
 
-To learn more about Next.js, take a look at the following resources:
+| Area | Examples |
+| --- | --- |
+| **Format & Convert** | JSON, YAML, CSV, XML, `.env` |
+| **Encode & Decode** | Base64, URL, JWT, Hex, HTML entities |
+| **Crypto & Hashing** | MD5/SHA, HMAC, UUID, password & secret generators |
+| **Text & Data** | diff, regex tester, case converter, line tools |
+| **Time & Dates** | Unix timestamp, cron explainer, timezones |
+| **Network** | CIDR/subnet calculator, URL parser, HTTP status codes, chmod |
+| **DevOps & Data** | `kubectl` builder, `docker run` → Compose, SQL formatter, curl builder |
+| **Practice** | Linux • Docker • Kubernetes lessons |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Built with
 
-## Deploy on Vercel
+[Next.js](https://nextjs.org) · [TypeScript](https://www.typescriptlang.org) · [Tailwind CSS](https://tailwindcss.com) · [cmdk](https://cmdk.paco.me) · [Fuse.js](https://fusejs.io)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ➕ Want to add a tool?
+
+It takes three small steps — no framework knowledge required:
+
+1. Create `src/utilities/<category>/<your-tool>.tsx` with your component.
+2. Register it by `id` in `src/lib/tool-components.tsx`.
+3. Add its info (title, description, keywords, icon) to `src/lib/registry.ts`.
+
+It instantly shows up in search, the home page, its category, and gets its own page.
+
+To add a **lesson**, just add an entry to `src/content/linux.ts`, `docker.ts`, or `kubernetes.ts`.
+
+---
+
+## ☁️ Deploy
+
+One click with [Vercel](https://vercel.com) — import the repo and hit deploy. Every page is statically generated, so it also works on any static host.
+
+---
+
+Made for engineers who'd rather work than search. ⚡
