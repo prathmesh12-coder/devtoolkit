@@ -40,16 +40,29 @@ function convert(input: string): string {
   } = { ports: [], volumes: [], environment: [], networks: [] };
 
   let i = 0;
-  const next = () => tokens[++i];
+  // Consume the next token as a flag's value, but only when it actually exists
+  // and is not itself another flag. The cursor advances only when a value is
+  // taken, so a value-less flag (e.g. "-p -d nginx" or a trailing flag) does
+  // not swallow the following flag or produce undefined values.
+  const next = (): string | undefined => {
+    const value = tokens[i + 1];
+    if (value === undefined || value.startsWith("-")) return undefined;
+    i++;
+    return value;
+  };
+  const pushValue = (target: string[]) => {
+    const value = next();
+    if (value !== undefined) target.push(value);
+  };
   for (; i < tokens.length; i++) {
     const t = tokens[i];
     if (t === "-d" || t === "--detach" || t === "-it" || t === "-i" || t === "-t" || t === "--rm") continue;
-    else if (t === "-p" || t === "--publish") svc.ports.push(next());
-    else if (t === "-v" || t === "--volume") svc.volumes.push(next());
-    else if (t === "-e" || t === "--env") svc.environment.push(next());
-    else if (t === "--name") svc.container_name = next();
-    else if (t === "--restart") svc.restart = next();
-    else if (t === "--network" || t === "--net") svc.networks.push(next());
+    else if (t === "-p" || t === "--publish") pushValue(svc.ports);
+    else if (t === "-v" || t === "--volume") pushValue(svc.volumes);
+    else if (t === "-e" || t === "--env") pushValue(svc.environment);
+    else if (t === "--name") svc.container_name = next() ?? svc.container_name;
+    else if (t === "--restart") svc.restart = next() ?? svc.restart;
+    else if (t === "--network" || t === "--net") pushValue(svc.networks);
     else if (t.startsWith("-")) {
       // Unknown flag; skip its value if it looks like it takes one.
       if (!t.includes("=") && tokens[i + 1] && !tokens[i + 1].startsWith("-")) i++;
